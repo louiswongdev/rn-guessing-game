@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,11 +12,41 @@ import Colors from '../constants/colors';
 import MainButton from '../components/MainButton';
 
 const GameOverScreen = ({ roundsNumber, userNumber, onRestartGame }) => {
+  const [availableDeviceWidth, setAvailableDeviceWidth] = useState(
+    Dimensions.get('window').width,
+  );
+  const [availableDeviceHeight, setAvailableDeviceHeight] = useState(
+    Dimensions.get('window').height,
+  );
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setAvailableDeviceWidth(Dimensions.get('window').width);
+      setAvailableDeviceHeight(Dimensions.get('window').height);
+    };
+
+    Dimensions.addEventListener('change', updateLayout);
+
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    };
+  }, [Dimensions]);
+
   return (
     <ScrollView>
       <View style={styles.screen}>
         <Text style={DefaultStyles.title}>The Game is Over</Text>
-        <View style={styles.imageContainer}>
+        <View
+          style={{
+            ...styles.imageContainer,
+            ...{
+              width: availableDeviceWidth * 0.7,
+              height: availableDeviceWidth * 0.7,
+              borderRadius: (availableDeviceWidth * 0.7) / 2,
+              marginVertical: availableDeviceHeight / 30,
+            },
+          }}
+        >
           <Image
             style={styles.image}
             resizeMode="cover"
@@ -47,15 +77,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 10,
   },
   imageContainer: {
-    width: Dimensions.get('window').width * 0.7,
-    height: Dimensions.get('window').width * 0.7,
-    borderRadius: (Dimensions.get('window').width * 0.7) / 2,
     borderWidth: 3,
     borderColor: '#888',
     overflow: 'hidden',
-    marginVertical: Dimensions.get('window').height / 30,
   },
   image: {
     width: '100%',
