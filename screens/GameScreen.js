@@ -109,10 +109,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <View style={styles.screen}>
         <Text>Opponent's Guess</Text>
         <View style={styles.controls}>
-          <MainButton
-            style={styles.buttons}
-            onPress={nextGuessHandler.bind(this, 'lower')}
-          >
+          <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
             <Ionicons name="md-remove" size={24} color="white" />
           </MainButton>
           <NumberContainer>{currentGuess}</NumberContainer>
@@ -139,7 +136,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <MainButton
-          style={styles.buttons}
+          // style={styles.buttons}
           onPress={nextGuessHandler.bind(this, 'lower')}
         >
           <Ionicons name="md-remove" size={24} color="white" />
